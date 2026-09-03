@@ -106,3 +106,50 @@ Two additional objects, `mhs2` and `mhs3`, have been added to `TestMahasiswa.jav
 javac Mahasiswa.java TestMahasiswa.java
 java TestMahasiswa
 ```
+
+
+---
+
+# Experiment 3 - Writing a Method with a Return Value
+
+## Program Files
+
+- `Barang.java` defines the item attributes, `tampilBarang()`, and the return-valued method `tambahStok(int brgMasuk)`.
+- `TestBarang.java` creates a `Barang` object and displays the value returned after adding incoming stock.
+
+## Program Flow
+
+The initial stock is `10`. The program calls `brg1.tambahStok(20)`, so the method calculates:
+
+```text
+stokBaru = brgMasuk + stok
+          = 20 + 10
+          = 30
+```
+
+The returned value is therefore `30`.
+
+> `tambahStok()` follows the jobsheet exactly: it calculates and returns a new value but does not change the object's stored `stok` attribute.
+
+## Answers
+
+### 4. What is the function of an argument in a method?
+
+An argument supplies input data to a method when the method is called. In `brg1.tambahStok(20)`, the value `20` is the argument received by the `brgMasuk` parameter and used in the stock calculation.
+
+### 5. When should the `return` keyword be used?
+
+Use `return` when a non-`void` method must send a result back to its caller. The returned value must be compatible with the method's declared return type. Here, `tambahStok()` declares the return type `int`, so it returns the integer stored in `stokBaru`.
+
+## Compile and Run
+
+```bash
+javac Barang.java TestBarang.java
+java TestBarang
+```
+
+Expected final line:
+
+```text
+Stok baru adalah 30
+```
