@@ -46,3 +46,5 @@ java EncapTest
 
 Each exercise is isolated so classes with the same name, such as the two versions of `Motor` and `Anggota`, do not conflict.
 
+The earlier `experiments/motorencapsulation/` upload is retained unchanged as the original NetBeans-style Experiment 1. The numbered folder is the submission-organized copy.
+
