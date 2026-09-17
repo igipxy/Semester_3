@@ -1,0 +1,9 @@
+Laptop Brand = Thinkpad
+Processor Brand = Intel i5
+Cache Memory = 3.00
+Laptop Brand = Thinkpad
+Processor Brand = Intel i5
+Cache Memory = 4.00
+Laptop Brand = Thinkpad
+Processor Brand = Intel i5
+Cache Memory = 3.00

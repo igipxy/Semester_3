@@ -1,0 +1,8 @@
+Store: Campus Mart
+Supplier: Nusantara Supplies
+Stock: 20
+
+=== SALES RECEIPT ===
+Store: Campus Mart
+Quantity sold: 3
+Remaining stock: 17
