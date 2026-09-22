@@ -2,7 +2,7 @@
 // Local development credentials. Change these values for your own PostgreSQL installation.
 $host = 'localhost';
 $port = '5432';
-$db = 'simpus_mini';
+$db = 'web';
 $user = 'postgres';
 $pass = 'postgres';
 
