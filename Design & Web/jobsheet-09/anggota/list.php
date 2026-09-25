@@ -7,18 +7,26 @@ $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
 
 $keyword = trim($_GET['q'] ?? '');
+$pattern = '%' . $keyword . '%';
 $perPage = 5;
 $pageValue = filter_var($_GET['page'] ?? 1, FILTER_VALIDATE_INT);
 $page = max(1, $pageValue === false ? 1 : $pageValue);
-$searchSql = '(name ILIKE :keyword OR member_number ILIKE :keyword OR address ILIKE :keyword)';
 
 if ($keyword !== '') {
+    $searchSql = '(name ILIKE :name_keyword OR member_number ILIKE :number_keyword OR address ILIKE :address_keyword)';
+    $searchValues = [
+        'name_keyword' => $pattern,
+        'number_keyword' => $pattern,
+        'address_keyword' => $pattern,
+    ];
     $count = $pdo->prepare('SELECT COUNT(*) FROM anggota WHERE ' . $searchSql);
-    $count->execute(['keyword' => '%' . $keyword . '%']);
+    $count->execute($searchValues);
     $totalRows = (int) $count->fetchColumn();
 
     $stmt = $pdo->prepare('SELECT * FROM anggota WHERE ' . $searchSql . ' ORDER BY id DESC LIMIT :limit OFFSET :offset');
-    $stmt->bindValue('keyword', '%' . $keyword . '%');
+    foreach ($searchValues as $name => $value) {
+        $stmt->bindValue($name, $value, PDO::PARAM_STR);
+    }
 } else {
     $totalRows = (int) $pdo->query('SELECT COUNT(*) FROM anggota')->fetchColumn();
     $stmt = $pdo->prepare('SELECT * FROM anggota ORDER BY id DESC LIMIT :limit OFFSET :offset');
