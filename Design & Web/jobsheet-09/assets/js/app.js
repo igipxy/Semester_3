@@ -1,10 +1,8 @@
 "use strict";
 
-// ===== Hamburger menu (JavaScript-driven) =====
 function initNavToggle() {
     const toggleBtn = document.getElementById("nav-toggle-btn");
     const nav = document.querySelector("header nav");
-
     if (!toggleBtn || !nav) return;
 
     toggleBtn.addEventListener("click", function () {
@@ -13,47 +11,36 @@ function initNavToggle() {
     });
 }
 
-// ===== Delete confirmation using event delegation =====
+// Listen for form submission so Cancel prevents the request reaching hapus.php.
 function initHapusConfirm() {
-    document.addEventListener("click", function (event) {
-        const target = event.target;
-        if (!(target instanceof Element)) return;
+    document.addEventListener("submit", function (event) {
+        const form = event.target;
+        if (!(form instanceof HTMLFormElement) || !form.matches(".form-hapus")) return;
 
-        const btn = target.closest(".btn-delete");
-        if (!btn) return;
-
-        const row = btn.closest("tr");
+        const row = form.closest("tr");
         const name = row ? row.querySelector("td")?.textContent.trim() : "this data";
-        const yakin = window.confirm(`Are you sure you want to delete "${name}"?`);
-
-        if (yakin && row) {
-            row.remove();
+        if (!window.confirm(`Are you sure you want to delete "${name}"?`)) {
+            event.preventDefault();
         }
     });
 }
 
-// ===== Real-time table filter =====
+// This quick filter narrows the rows already loaded on this page.
 function initTableFilter() {
     const input = document.getElementById("search-input");
     const table = document.querySelector(".table-responsive table");
-
     if (!input || !table) return;
 
-    input.addEventListener("keyup", function () {
+    input.addEventListener("input", function () {
         const keyword = input.value.trim().toLowerCase();
-        const rows = table.querySelectorAll("tbody tr");
-
-        rows.forEach(function (row) {
-            const text = row.textContent.toLowerCase();
-            row.style.display = text.includes(keyword) ? "" : "none";
+        table.querySelectorAll("tbody tr[data-search-row]").forEach(function (row) {
+            row.hidden = !row.textContent.toLowerCase().includes(keyword);
         });
     });
 }
 
-// ===== Client-side form validation =====
 function tampilkanError(input, message) {
     hapusError(input);
-
     const span = document.createElement("span");
     span.className = "error";
     span.textContent = message;
@@ -63,34 +50,26 @@ function tampilkanError(input, message) {
 
 function hapusError(input) {
     const next = input.nextElementSibling;
-
-    if (next && next.classList.contains("error")) {
-        next.remove();
-    }
-
+    if (next && next.classList.contains("error")) next.remove();
     input.removeAttribute("aria-invalid");
 }
 
 function validasiWajib(input, message) {
     if (!input) return true;
-
     if (input.value.trim() === "") {
         tampilkanError(input, message);
         return false;
     }
-
     hapusError(input);
     return true;
 }
 
 function initValidasiForm() {
     const form = document.getElementById("form-tambah");
-
     if (!form) return;
 
     form.addEventListener("submit", function (event) {
         let valid = true;
-
         const titleOrName = form.querySelector("[name='title'], [name='name']");
         const author = form.querySelector("[name='author']");
         const memberNumber = form.querySelector("[name='member_number']");
@@ -100,27 +79,20 @@ function initValidasiForm() {
         valid = validasiWajib(titleOrName, "This field is required.") && valid;
         valid = validasiWajib(author, "Author is required.") && valid;
         valid = validasiWajib(memberNumber, "Member number is required.") && valid;
-
         if (year) {
             const value = Number(year.value);
-            if (year.value.trim() === "" || !Number.isInteger(value) || value < 1900 || value > 2026) {
+            if (!Number.isInteger(value) || value < 1900 || value > 2026) {
                 tampilkanError(year, "Year must be between 1900 and 2026.");
                 valid = false;
-            } else {
-                hapusError(year);
-            }
+            } else hapusError(year);
         }
-
         if (stock) {
             const value = Number(stock.value);
-            if (stock.value.trim() === "" || !Number.isInteger(value) || value < 0) {
+            if (!Number.isInteger(value) || value < 0) {
                 tampilkanError(stock, "Stock must be zero or greater.");
                 valid = false;
-            } else {
-                hapusError(stock);
-            }
+            } else hapusError(stock);
         }
-
         if (!valid) {
             event.preventDefault();
             form.querySelector("[aria-invalid='true']")?.focus();

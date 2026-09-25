@@ -1,52 +1,41 @@
-# Jobsheet 8 PostgreSQL Connection
+# Jobsheet 9 Full CRUD
 
-Jobsheet 8 moves SIMPUS-Mini from temporary PHP session storage to permanent PostgreSQL storage. The page layout, client-side usability features, and flash-message pattern from Jobsheet 7 remain in place.
+Jobsheet 9 extends the existing PHP and PostgreSQL SIMPUS-Mini project with persistent Update and Delete operations. It also adds server-side search and five-row pagination to both data lists.
 
-## What changed from Jobsheet 7
+## Features
 
-1. `sql/01_buku_anggota.sql` creates the `buku` and `anggota` tables.
-2. `includes/koneksi.php` connects PHP to PostgreSQL through PDO.
-3. The Book and Member process pages use prepared `INSERT` statements with `RETURNING id`.
-4. The list pages run `SELECT * ... ORDER BY id DESC`.
-5. The Home statistics use `SELECT COUNT(*)`.
-6. `$_SESSION` is now used only for one-time flash messages; books and members are stored in PostgreSQL.
+- Create and Read are retained from Jobsheet 8.
+- Edit pages load one row using its ID and prefill the form.
+- Update handlers validate POST data and use prepared UPDATE statements with WHERE id = :id.
+- Delete handlers accept POST only and use prepared DELETE statements with WHERE id = :id.
+- JavaScript asks for confirmation on form submit. Cancel prevents the POST; confirm allows PHP/PostgreSQL to do the deletion.
+- Lists search across database records using PostgreSQL ILIKE and show five rows per page with LIMIT/OFFSET.
+- Search and pagination work together. The optional instant filter narrows the current page.
+- The helper e() escapes displayed user values in HTML.
 
-## Database preparation
+## Use your existing database
 
-1. Start PostgreSQL and ensure PHP has the `pdo_pgsql` extension enabled.
-2. Create the database:
+This project expects the database named web, created in Jobsheet 8. Set the password in includes/koneksi.php to your own local PostgreSQL password. Do not use the example password unless it is the one configured on your computer.
 
-   ```text
-   createdb simpus_mini
-   ```
+If you have not created the tables yet, open a terminal in this jobsheet-09 folder and run:
 
-3. From the `jobsheet-08` folder, run the schema:
+    psql -U postgres -d web -f sql/01_buku_anggota.sql
 
-   ```text
-   psql -d simpus_mini -f sql/01_buku_anggota.sql
-   ```
+The SQL uses CREATE TABLE IF NOT EXISTS, so running it again does not replace table data.
 
-4. Open `includes/koneksi.php` and set `$user` and `$pass` to your local PostgreSQL credentials. The provided `postgres` / `postgres` values are only common local-development defaults.
+## Run with Laragon
 
-## Run
+1. Start Apache and PostgreSQL in Laragon.
+2. Put the repository under Laragon's www folder, or use Laragon's configured web root.
+3. Confirm PHP has pdo_pgsql enabled and update includes/koneksi.php credentials.
+4. Open http://localhost/Semester_3/Design%20%26%20Web/jobsheet-09/ or start the PHP development server in this folder with php -S localhost:8000.
+5. Open the corresponding local URL in your browser.
 
-```text
-php -S localhost:8000
-```
+## CRUD routes
 
-Open `http://localhost:8000/index.php`.
+- Books: buku/list.php, tambah.php, edit.php?id=ID, proses_edit.php, hapus.php.
+- Members: anggota/list.php, tambah.php, edit.php?id=ID, proses_edit.php, hapus.php.
 
-## Test checklist
+## Learning and test guide
 
-1. Home should show 0 Books and 0 Members in a new database.
-2. Add a valid book. It should appear at the top of Book List, and Home should show 1 Book.
-3. Refresh the list: the flash message disappears, but the record remains.
-4. Close the browser, reopen it, and confirm the data still exists.
-5. Add two members with the same member number. The second attempt must show a friendly error message because the database enforces `UNIQUE`.
-6. Submit invalid form data with JavaScript disabled. PHP validation must still reject it.
-
-## Important boundaries
-
-- PostgreSQL persists Book and Member records; it is the new source of truth.
-- Delete and Edit buttons are still display-only in this jobsheet. Persistent edit/delete belongs to Jobsheet 9.
-- Prepared statements are used whenever submitted data goes into SQL, preventing submitted text from changing the query structure.
+See PANDUAN_BELAJAR.md for file-by-file explanations and a safe test sequence. Test with disposable records first. Database writes require your working local PostgreSQL service and correct credentials.

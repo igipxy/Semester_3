@@ -1,6 +1,6 @@
--- Jobsheet 8: PostgreSQL schema for SIMPUS-Mini.
--- Create the database first, then run this file with:
--- psql -d simpus_mini -f sql/01_buku_anggota.sql
+-- Jobsheet 8/9 PostgreSQL schema for SIMPUS-Mini.
+-- Connect to the existing database "web" before running this schema.
+-- From the jobsheet-09 folder: psql -U postgres -d web -f sql/01_buku_anggota.sql
 
 CREATE TABLE IF NOT EXISTS buku (
     id SERIAL PRIMARY KEY,
