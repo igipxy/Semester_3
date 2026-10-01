@@ -1,0 +1,3 @@
+konstruktor A dijalankan
+konstruktor B dijalankan
+konstruktor C dijalankan

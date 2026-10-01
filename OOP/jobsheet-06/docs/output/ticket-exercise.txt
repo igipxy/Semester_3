@@ -1,0 +1,29 @@
+====== Tiket Kereta ======
+Kode Tiket     = KA-001
+Nama Penumpang = Andi
+Rute           = Malang - Jakarta
+Harga Dasar    = 350000
+Nomor Gerbong  = 3
+Nomor Kursi    = 12A
+Total Bayar    = 350000
+====== Tiket Pesawat Domestik ======
+Kode Tiket     = GA-102
+Nama Penumpang = Sinta
+Rute           = Surabaya - Denpasar
+Harga Dasar    = 900000
+Maskapai       = Garuda Indonesia
+Berat Bagasi   = 25 kg
+Biaya Bagasi   = 250000
+Pajak Bandara  = 75000
+Total Bayar    = 1225000
+====== Tiket Pesawat Internasional ======
+Kode Tiket     = SQ-205
+Nama Penumpang = Budi
+Rute           = Jakarta - Singapura
+Harga Dasar    = 2500000
+Maskapai       = Singapore Airlines
+Berat Bagasi   = 20 kg
+Biaya Bagasi   = 0
+Nomor Paspor   = C1234567
+Asuransi       = 150000
+Total Bayar    = 2650000

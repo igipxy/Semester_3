@@ -1,0 +1,4 @@
+nilai x: 20
+nilai y: 30
+nilai z: 5
+jumlah: 55

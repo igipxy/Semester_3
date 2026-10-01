@@ -1,0 +1,15 @@
+Nama          = Vivin
+Alamat        = Jl. Vinolia
+Jenis Kelamin = Perempuan
+Umur          = 25
+Gaji          = 3000000
+Tunjangan     = 1000000
+Total Gaji    = 4000000
+Nama          = Lestari
+Alamat        = Malang
+Jenis Kelamin = Perempuan
+Umur          = 25
+Gaji          = 2000000
+Lembur        = 500000
+Potongan      = 250000
+Total Gaji    = 2250000

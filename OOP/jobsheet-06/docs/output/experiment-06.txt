@@ -1,0 +1,23 @@
+====== Data Staff Tetap ======
+Nama          = Budi
+Alamat        = Malang
+Jenis Kelamin = Laki-laki
+Umur          = 20
+Gaji          = 2000000
+Lembur        = 200000
+Potongan      = 250000
+Total Gaji    = 1950000
+Golongan      = 2A
+Jumlah Asuransi = 100000
+Gaji Bersih   = 1850000
+====== Data Staff Harian ======
+Nama          = Indah
+Alamat        = Malang
+Jenis Kelamin = Perempuan
+Umur          = 27
+Gaji          = 10000
+Lembur        = 100000
+Potongan      = 50000
+Total Gaji    = 60000
+Jumlah Jam Kerja = 100
+Gaji Bersih   = 1050000
